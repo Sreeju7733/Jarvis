@@ -1,6 +1,57 @@
 // Get elements from the DOM
 const btn = document.querySelector('.talk');
 const content = document.querySelector('.content');
+const dateandtime = document.getElementById('dateandtime');
+
+
+
+
+
+function updateTimeAndDate() {
+    // Get the current date and time
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0'); // Ensure minutes are always two digits
+    const amPm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Adjust hours for 12-hour clock
+    const day = now.getDate();
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const month = monthNames[now.getMonth()];
+    const year = now.getFullYear();
+    const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const weekday = weekdayNames[now.getDay()];
+
+    // Combine the formatted components into the desired string
+    const formattedTimeAndDate = `${hours}:${minutes} ${amPm} ${day} ${month} ${year}, ${weekday}`;
+
+    // Update the paragraph element with the formatted time and date
+    document.getElementById('dateandtime').textContent = formattedTimeAndDate;
+}
+
+// Function to check internet connectivity
+function checkConnectivity() {
+    const online = navigator.onLine;
+    if (online) {
+        document.getElementById('internet-on').style.display = 'block';
+        document.getElementById('internet-off').style.display = 'none';
+    } else {
+        document.getElementById('internet-on').style.display = 'none';
+        document.getElementById('internet-off').style.display = 'block';
+    }
+}
+
+// Initial display
+updateTimeAndDate();
+checkConnectivity();
+
+// Update time and date and Check connectivity status every 5 second
+setInterval(updateTimeAndDate, 5000);
+setInterval(checkConnectivity, 5000);
+
+
+
+
+
 
 // Function to speak given text
 function speak(text) {
@@ -118,7 +169,8 @@ async function processCommand(message) {
     } else if (message.includes('how are you')) {
         finalText = "I am fine boss, tell me how can I help you?";
 	} else if (message.includes('who are you')) {
-        var audio = new Audio('Jarvis.mp3');
+		finalText = " ";
+        var audio = new Audio('jarvis.mp3');
 		audio.play();
 	} else if (message.includes('do you know who am i')) {
         finalText = "Yes i know you are my boss sreeju";

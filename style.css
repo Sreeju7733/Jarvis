@@ -41,6 +41,12 @@
   font-size: 40px;
 }
 
+#dateandtime {
+  color: #324042;
+  text-align: center;
+  margin-top: 10px;
+}
+
 .main .image-container p {
   color: #324042;
   text-align: center;
@@ -61,7 +67,7 @@
   background: transparent;
   outline: none;
   border: none;
-  width: 50px;
+  width: 250px;
   height: 50px;
   display: flex;
   justify-content: center;
