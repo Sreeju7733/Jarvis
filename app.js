@@ -62,22 +62,6 @@ setInterval(checkConnectivity, 5000);
 
 
 
-// Function to speak given text
-function speak(text) {
-    const text_speak = new SpeechSynthesisUtterance(text);
-    jarvis_t.textContent = text; // Display text spoken by Jarvis in the designated element
-
-    // Speech synthesis settings
-    text_speak.rate = 1;
-    text_speak.pitch = 1;
-
-    window.speechSynthesis.speak(text_speak); // Speak the provided text
-}
-
-
-
-
-
 
 // Function to update battery status
 function updateBatteryInfo(battery) {
@@ -127,7 +111,6 @@ function speak(text) {
 
     // Speech synthesis settings
     text_speak.rate = 1;
-    text_speak.volume = 1;
     text_speak.pitch = 1;
 
     window.speechSynthesis.speak(text_speak); // Speak the provided text
@@ -378,8 +361,10 @@ async function processCommand(message) {
     else {
         speech.text = finalText || "Could you just repeat it again?";
     }
- 
+	
+	speech.text = finalText;
 	jarvis_t.textContent = speech.text; // Display text spoken by Jarvis in the designated element
+	
  
     // Set speech synthesis parameters
     speech.pitch = 1;
