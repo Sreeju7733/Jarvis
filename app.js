@@ -69,11 +69,11 @@ function speak(text) {
 
     // Speech synthesis settings
     text_speak.rate = 1;
-    text_speak.volume = 1;
     text_speak.pitch = 1;
 
     window.speechSynthesis.speak(text_speak); // Speak the provided text
 }
+
 
 
 
@@ -382,7 +382,6 @@ async function processCommand(message) {
 	jarvis_t.textContent = speech.text; // Display text spoken by Jarvis in the designated element
  
     // Set speech synthesis parameters
-    speech.volume = 1;
     speech.pitch = 1;
     speech.rate = 1;
 
