@@ -108,11 +108,11 @@ function wishMe() {
     }
 }
 
+
 window.addEventListener('load', () => {
     speak("Initializing JARVIS..");
-	
-	var audio = new Audio('power up.mp3');
-	audio.play();
+	var audio = new Audio(src);
+	audio.play('power up.mp3');
     wishMe();
 });
 
@@ -189,37 +189,48 @@ async function processCommand(message) {
     }
 
     // Check for weather-related commands
-    if (message.includes('weather in')) {
+    else if (message.includes('weather in')) {
         const city = message.split('weather in')[1].trim();
         finalText = await fetchWeather(city);
     }
 
 	// Basic
-    if (message.includes('hey') || message.includes('hello') || message.includes('hi')) {
+    else if (message.includes('hey') || message.includes('hello') || message.includes('hi')) {
         finalText = "Hello Boss";
-    } else if (message.includes('how are you')) {
+    }
+	else if (message.includes('how are you')) {
         finalText = "I am fine boss, tell me how can I help you?";
-	} else if (message.includes('who are you')) {
-		finalText = " ";
-        var audio = new Audio('jarvis.mp3');
-		audio.play();
-	} else if (message.includes('do you know who am i')) {
-        finalText = "Yes i know you are my boss sreeju";
-    } else if (message.includes('open google')) {
+	}
+	else if (message.includes('fuck you')) {
+        finalText = "Fuck you";
+	}
+	else if (message.includes('who are you')) {
+			var audio = new Audio(src);
+			audio.play('jarvis.mp3');
+	}
+	else if (message.includes('do you know who am i')) {
+        finalText = "Yep got it You're the boss Sreeju";
+    }
+	else if (message.includes('open google')) {
         window.open("https://google.com", "_blank");
         finalText = "Opening Google";
-    } else if (message.includes('time')) {
+    }
+	else if (message.includes('time')) {
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         finalText = `The time is ${time}`;
-    } else if (message.includes('date')) {
+    }
+	else if (message.includes('date')) {
         const date = new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         finalText = `Today is ${date}`;
-    } else if (message.includes('day of the week')) {
+    }
+	else if (message.includes('day of the week')) {
         const dayOfWeek = new Date().toLocaleDateString(undefined, { weekday: 'long' });
         finalText = `Today is ${dayOfWeek}`;
-    } else if (message.includes('news')) {
+    }
+	else if (message.includes('news')) {
         finalText = await fetchNews();
-    } else if (message.includes('calculate')) {
+    }
+	else if (message.includes('calculate')) {
         const expression = message.replace('calculate', '').trim();
         try {
             const result = eval(expression); // Caution: using eval - consider safer alternatives for production
@@ -227,15 +238,18 @@ async function processCommand(message) {
         } catch (error) {
             finalText = "Sorry, I couldn't calculate that.";
         }
-    } else if (message.includes('open website')) {
+    }
+	else if (message.includes('open website')) {
         const url = message.split('open website')[1].trim();
         window.open(`https://${url}`, "_blank");
         finalText = `Opening ${url}`;
-    } else if (message.includes('search')) {
+    }
+	else if (message.includes('search')) {
         const searchTerm = message.replace('search', '').trim();
         window.open(`https://www.google.com/search?q=${searchTerm}`, "_blank");
         finalText = `Searching for ${searchTerm} on Google`;
-    } else if (message.includes('my location')) {
+    }
+	else if (message.includes('my location')) {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(async function(position) {
                 const latitude = position.coords.latitude;
@@ -251,24 +265,29 @@ async function processCommand(message) {
         } else {
             finalText = "Geolocation is not supported in your browser.";
         }
-    } else if (message.includes('set a reminder')) {
+    }
+	else if (message.includes('set a reminder')) {
         // Code to set a reminder, possibly using browser notifications or other reminder services
         finalText = "Reminder set successfully!";
-    } else if (message.includes('send email')) {
+    }
+	else if (message.includes('send email')) {
         // Code to send an email or open a draft in a mail client
         // Example code using mailto (opens default email client)
         const email = message.split('send email')[1].trim();
         window.open(`mailto:${email}`);
         finalText = `Opening email client to send an email to ${email}`;
-    } else if (message.includes('call')) {
+    }
+	else if (message.includes('call')) {
         // Code to send an email or open a draft in a mail client
         // Example code using mailto (opens default email client)
         const email = message.split('call')[1].trim();
         window.open(`mailto:${email}`);
         finalText = `Opening email client to send an email to ${email}`;
     }
-	
-    speech.text = finalText || "I did not understand what you said. Please try again.";
+	else {
+		speech.text = finalText || "I did not understand what you said. Please try again.";
+	}
+ 
     speech.volume = 1;
     speech.pitch = 1;
     speech.rate = 1;
