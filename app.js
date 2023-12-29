@@ -188,7 +188,7 @@ const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with 
 
 
 
-// Function to query OpenAI's GPT-3 engine
+
 async function askOpenAI(prompt) {
     try {
         const response = await fetch('https://api.openai.com/v1/engines/davinci/completions', {
@@ -199,7 +199,7 @@ async function askOpenAI(prompt) {
             },
             body: JSON.stringify({
                 prompt: prompt,
-                max_tokens: 50, // Adjust token count as needed
+                max_tokens: 50,
             }),
         });
 
@@ -250,8 +250,8 @@ async function processCommand(message) {
     // Check for different types of commands and perform actions accordingly
 
     // Check for AI-related commands
-    if (message.includes('help gpt')) {
-        const prompt = message.replace('help gpt', '').trim();
+    if (message.includes('gpt')) {
+        const prompt = message.replace('gpt', '').trim();
         finalText = await askOpenAI(prompt); // Call function to query OpenAI's GPT-3 engine
     }
 
@@ -263,24 +263,31 @@ async function processCommand(message) {
 
     // Handle basic greetings
     else if (message.includes('hey') || message.includes('hello') || message.includes('hi')) {
-        finalText = "Hello Boss";
+        finalText = "Hi, Boss. How are you doing?";
     }
+	
+	// Handle basic greetings
+    else if (message.includes('fine') || message.includes('doing good') || message.includes('doing well')) {
+        finalText = "Sounds good!";
+    }
+	
     // Respond to a query about well-being
     else if (message.includes('how are you')) {
-        finalText = "I am fine boss, tell me how can I help you?";
+        finalText = "I'm doing great, boss. Tell me how I can assist you.";
     }
     // Handle inappropriate language
-    else if (message.includes('fuck you')) {
+    else if (message.includes('f** you')) {
         finalText = "Fuck you";
     }
     // Respond to inquiries about its identity
     else if (message.includes('who are you')) {
+		let finalText = '';
         var audio = new Audio(src); // Play audio file
         audio.play('jarvis.mp3');
     }
     // Identify the user
     else if (message.includes('do you know who am i') || message.includes('who am i')) {
-        finalText = "Yep got it You're my boss Sreeju";
+        finalText = "In reality, you are my boss, Sreeju.";
     }
     // Open Google in a new tab
     else if (message.includes('open google')) {
@@ -349,14 +356,30 @@ async function processCommand(message) {
         // Code to set a reminder, possibly using browser notifications or other reminder services
         finalText = "Reminder set successfully!";
     }
-    // Open email client or initiate email sending (functionality not fully implemented)
-    else if (message.includes('send email') || message.includes('call')) {
+    // Open email client or initiate email sending
+    else if (message.includes('send email')) {
         // Code to send an email or open a draft in a mail client
-        // Example code using mailto (opens default email client)
-        const email = message.includes('send email') ? message.split('send email')[1].trim() : message.split('call')[1].trim();
+        const email = message.split('send email')[1].trim();
         window.open(`mailto:${email}`);
         finalText = `Opening email client to send an email to ${email}`;
     }
+    // Open dialer to call
+    else if (message.includes('call')) {
+        // Code to open a dialer to call
+        const call = message.split('call')[1].trim();
+        window.open(`tell:${call}`);
+        finalText = `Opening dialer to call.`;
+    }
+    // General questions
+    else if (message.includes('what is your fathers name') || message.includes('who is your father') || message.includes('who created you') || ) {
+        finalText = `Sreeju was the one who gave me life.`;
+    }
+	// Birthday
+    else if (message.includes('when is your birthday')) {
+        finalText = `On December 29, 2023, around midnight, I existed as an idea in Sreeju's mind.`;
+    }
+	
+	
     // Default response if no recognized command is found
     else {
         speech.text = finalText || "Could you just repeat it again?";
