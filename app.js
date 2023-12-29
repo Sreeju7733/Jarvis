@@ -49,20 +49,6 @@ btn.addEventListener('click', () => {
     recognition.start();
 });
 
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-
-recognition.onresult = async (event) => {
-    const current = event.resultIndex;
-    const transcript = event.results[current][0].transcript;
-    content.textContent = transcript;
-    await processCommand(transcript.toLowerCase());
-};
-
-btn.addEventListener('click', () => {
-	content.textContent = "Listening...."
-    recognition.start();
-});
 
 const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
 const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with your OpenWeatherMap API key
@@ -132,7 +118,7 @@ async function processCommand(message) {
     } else if (message.includes('how are you')) {
         finalText = "I am fine boss, tell me how can I help you?";
 	} else if (message.includes('who are you')) {
-        var audio = new Audio('jarvis.mp3');
+        var audio = new Audio('Jarvis.mp3');
 		audio.play();
 	} else if (message.includes('do you know who am i')) {
         finalText = "Yes i know you are my boss sreeju";
