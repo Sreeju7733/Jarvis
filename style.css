@@ -47,20 +47,28 @@
   margin-top: 10px;
 }
 
+#battery-status {
+	color: #324042;
+}
+
 .main .image-container p {
   color: #324042;
   text-align: center;
-  margin-bottom: 40px;
 }
 
 .main .input {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40vw;
+  width: 100vw;
   height: 50px;
   border-radius: 20px;
-  background: rgb(202 253 255 / 50%);
+}
+
+.talk {
+	color: #ffffff00;
+	background-color: #ffffff00;
+	border: none;
 }
 
 .main .input .talk {
@@ -84,5 +92,4 @@
 .main .input .content {
   color: #aed0d0;
   font-size: 15px;
-  margin-right: 20px;
 }

@@ -1,12 +1,12 @@
 // Get elements from the DOM
 const btn = document.querySelector('.talk');
 const content = document.querySelector('.content');
-const dateandtime = document.getElementById('dateandtime');
+let jarvis_t = document.getElementById('jarvis_t');
 
 
 
 
-
+// Function to update date and time
 function updateTimeAndDate() {
     // Get the current date and time
     const now = new Date();
@@ -15,10 +15,10 @@ function updateTimeAndDate() {
     const amPm = hours >= 12 ? 'PM' : 'AM';
     hours = hours % 12 || 12; // Adjust hours for 12-hour clock
     const day = now.getDate();
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const month = monthNames[now.getMonth()];
     const year = now.getFullYear();
-    const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const weekdayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const weekday = weekdayNames[now.getDay()];
 
     // Combine the formatted components into the desired string
@@ -27,7 +27,6 @@ function updateTimeAndDate() {
     // Update the paragraph element with the formatted time and date
     document.getElementById('dateandtime').textContent = formattedTimeAndDate;
 }
-
 // Function to check internet connectivity
 function checkConnectivity() {
     const online = navigator.onLine;
@@ -47,7 +46,36 @@ checkConnectivity();
 // Update time and date and Check connectivity status every 5 second
 setInterval(updateTimeAndDate, 5000);
 setInterval(checkConnectivity, 5000);
+// Function  to update battery status
+function updateBatteryInfo(battery) {
+    const statusElement = document.getElementById('battery-status');
+    const charging = battery.charging;
+    const percentage = Math.round(battery.level * 100) + "%";
 
+    // Define icons based on charging status
+    const iconClass = charging ? "bolt" : "battery-empty";
+    const iconHTML = `<i class="fas fa-${iconClass}"></i>`;
+
+    // Display battery status with icons
+    statusElement.innerHTML = `${iconHTML} Battery: ${percentage}, ${charging ? 'Charging' : 'Not Charging'}`;
+}
+
+navigator.getBattery().then((battery) => {
+    updateBatteryInfo(battery);
+
+    // Update battery status every 5 seconds
+    setInterval(() => {
+        updateBatteryInfo(battery);
+    }, 5000);
+
+    battery.addEventListener('chargingchange', () => {
+        updateBatteryInfo(battery);
+    });
+
+    battery.addEventListener('levelchange', () => {
+        updateBatteryInfo(battery);
+    });
+});
 
 
 
@@ -55,7 +83,10 @@ setInterval(checkConnectivity, 5000);
 
 // Function to speak given text
 function speak(text) {
+	
     const text_speak = new SpeechSynthesisUtterance(text);
+	jarvis_t.textContent = text;
+	
 
     // Speech synthesis settings
     text_speak.rate = 1;
