@@ -6,32 +6,32 @@ const machine = document.querySelector(".machine");
 // const msgs = document.querySelector(".messages");
 // whether the recognition is stopiing on my command or automatically
 let stopingR = false;
-// jarvis's commands
-let jarvisComs = [];
-jarvisComs.push("hi jarvis");
-jarvisComs.push("what are your commands");
-jarvisComs.push("close this - to close opened popups");
-jarvisComs.push(
+// friday's commands
+let fridayComs = [];
+fridayComs.push("hi friday");
+fridayComs.push("what are your commands");
+fridayComs.push("close this - to close opened popups");
+fridayComs.push(
   "change my information - information regarding your acoounts and you"
 );
-jarvisComs.push("whats the weather or temperature");
-jarvisComs.push("show the full weather report");
-jarvisComs.push("are you there - to check jarviss presence");
-jarvisComs.push("shut down - stop voice recognition");
-jarvisComs.push("open google");
-jarvisComs.push('search for "your keywords" - to search on google ');
-jarvisComs.push("open whatsapp");
-jarvisComs.push("open youtube");
-jarvisComs.push('play "your keywords" - to search on youtube ');
-jarvisComs.push("close this youtube tab - to close opened youtube tab");
-jarvisComs.push("open firebase");
-jarvisComs.push("open netlify");
-jarvisComs.push("open twitter");
-jarvisComs.push("open my twitter profile");
-jarvisComs.push("open instagram");
-jarvisComs.push("open my instagram profile");
-jarvisComs.push("open github");
-jarvisComs.push("open my github profile");
+fridayComs.push("whats the weather or temperature");
+fridayComs.push("show the full weather report");
+fridayComs.push("are you there - to check fridays presence");
+fridayComs.push("shut down - stop voice recognition");
+fridayComs.push("open google");
+fridayComs.push('search for "your keywords" - to search on google ');
+fridayComs.push("open whatsapp");
+fridayComs.push("open youtube");
+fridayComs.push('play "your keywords" - to search on youtube ');
+fridayComs.push("close this youtube tab - to close opened youtube tab");
+fridayComs.push("open firebase");
+fridayComs.push("open netlify");
+fridayComs.push("open twitter");
+fridayComs.push("open my twitter profile");
+fridayComs.push("open instagram");
+fridayComs.push("open my instagram profile");
+fridayComs.push("open github");
+fridayComs.push("open my github profile");
 
 // youtube window
 let ytbWindow;
@@ -53,7 +53,7 @@ let hrs = date.getHours();
 let mins = date.getMinutes();
 let secs = date.getSeconds();
 
-// this is what jarvis tells about weather
+// this is what friday tells about weather
 let weatherStatement = "";
 let charge,chargeStatus, connectivity, currentTime
 chargeStatus = "unplugged"
@@ -72,7 +72,7 @@ window.onload = () => {
     }, 200);
   });
 
-  jarvisComs.forEach((e) => {
+  fridayComs.forEach((e) => {
     document.querySelector(".commands").innerHTML += `<p>#${e}</p><br />`;
   });
   // battery
@@ -115,7 +115,7 @@ window.onload = () => {
     }%`;
     charge = batteryObject.level * 100
     if (batteryObject.charging === true) {
-      document.querySelector(".battery").style.width = "300px";
+      document.querySelector(".battery").style.width = "200px";
       document.querySelector("#battery").textContent = `${
         (batteryObject.level * 100).toFixed(2)
       }% Charging`;
@@ -123,36 +123,34 @@ window.onload = () => {
     }
   }
 
+  // timer
+  // setInterval(() => {
+  //   let date = new Date();
+  //   let hrs = date.getHours();
+  //   let mins = date.getMinutes();
+  //   let secs = date.getSeconds();
+  //   time.textContent = `${hrs} : ${mins} : ${secs}`;
+  // }, 1000);
 };
 
-function updateTime() {
-  let date = new Date(); // Get current date/time
-  let hours = date.getHours();
-  let minutes = date.getMinutes();
-  let seconds = date.getSeconds();
-  let ampm = hours >= 12 ? 'PM' : 'AM';
-
-  // Convert hours to 12-hour format
+function formatAMPM(date) {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
   hours = hours % 12;
-  hours = hours ? hours : 12; // '0' hour should be '12'
-
-  // Add leading zeros if minutes or seconds are less than 10
-  minutes = minutes < 10 ? '0' + minutes : minutes;
-
-  let strTime = hours + ':' + minutes + ' ' + ampm;
-
-  // Assuming you have an HTML element with id="time" to display the time
-  document.getElementById('time').textContent = strTime;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  currentTime = strTime
+  time.textContent = strTime
 }
 
-// Initial call to display the time
-updateTime();
+formatAMPM(date)
+setInterval(() => {
+  formatAMPM(date)
+}, 60000);
 
-// Set interval to update the time every second
-setInterval(updateTime, 1000);
-
-
-// auto jarvis
+// auto friday
 
 function autoJarvis() {
   setTimeout(() => {
@@ -214,7 +212,7 @@ if (localStorage.getItem("jarvis_setup") !== null) {
   weather(JSON.parse(localStorage.getItem("jarvis_setup")).location);
 }
 
-// jarvis information setup
+// friday information setup
 
 const setup = document.querySelector(".jarvis_setup");
 setup.style.display = "none";
@@ -240,7 +238,7 @@ function userInfo() {
   });
 
   if (testArr.includes("")) {
-    readOut("Sir please fill in all the fields");
+    readOut("sir enter your complete information");
   } else {
     localStorage.clear();
     localStorage.setItem("jarvis_setup", JSON.stringify(setupInfo));
@@ -252,7 +250,8 @@ function userInfo() {
 // speech recognition
 
 // speech lang
-let speech_lang = "ta-IN" // "hi-IN" | "en-US"
+
+let speech_lang = "hi-IN" // "hi-IN" | "en-US"
 if(localStorage.getItem("lang") === null){
   localStorage.setItem("lang", "en-US")
 }
