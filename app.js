@@ -137,20 +137,16 @@ function wishMe() {
 
 
 
-
-// Event listener when the window loads
+/* // Event listener when the window loads
 window.addEventListener('load', () => {
-	window.open(`${window.location.href}`,"newWindow","menubar=true,location=true,resizable=false,scrollbars=false,width=320,height=705,top=0,left=0");
-	window.close();
+	
+	var song = new Audio();// Initialize an audio element
+	song.src = 'power up.mp3';
+	song.play(); // Play the 'power up.mp3' audio file
 	
     speak("Initializing JARVIS..");
-	var song = new Audio(); // Initialize an audio element
-	song.src = 'power up.mp3'; // 
-	song.play(); // Play the 'power up.mp3' audio file
-
     wishMe(); // Greet the user based on the time
-});
-
+}); */
 
 
 
@@ -175,10 +171,36 @@ recognition.onresult = async (event) => {
 
 
 
-// Event listener when the button is clicked to start speech recognition
+let musicPlayed = false;
+let speechInitialized = false;
+let recognitionStarted = false;
+
 btn.addEventListener('click', () => {
-    content.textContent = "Listening...."; // Display a listening message
-    recognition.start(); // Start speech recognition
+    if (!musicPlayed) {
+        var song = new Audio(); // Initialize an audio element
+        song.src = 'power up.mp3';
+        song.play(); // Play the 'power up.mp3' audio file
+        musicPlayed = true; // Update the flag to indicate music has been played
+    }
+
+    if (!speechInitialized) {
+        speak("Initializing JARVIS..");
+        wishMe(); // Greet the user based on the time
+        speechInitialized = true; // Update the flag to indicate speech initialized
+		
+		// Set recognitionStarted = true; after 5 seconds
+        setTimeout(() => {
+            recognitionStarted = true; // Update the flag to indicate recognition started
+        }, 3000);
+    }
+	
+	setTimeout(() => {
+		if (recognitionStarted) {
+			content.textContent = "Listening...."; // Update content to "Listening...."
+			recognition.start(); // Start speech recognition immediately
+			recognitionStarted = true; // Update the flag to indicate recognition started
+		}
+	}, 5000);
 });
 
 
@@ -186,7 +208,7 @@ btn.addEventListener('click', () => {
 
 
 // OpenAI and Weather API keys
-const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
+const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
 const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with your OpenWeatherMap API key
 
 
