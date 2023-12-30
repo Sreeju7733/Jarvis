@@ -208,7 +208,7 @@ btn.addEventListener('click', () => {
 
 
 // OpenAI and Weather API keys
-const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
+const OPENAI_API_KEY = ''; // Replace with your actual OpenAI API key
 const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with your OpenWeatherMap API key
 
 
@@ -308,9 +308,7 @@ async function processCommand(message) {
     }
     // Respond to inquiries about its identity
     else if (message.includes('who are you')) {
-		let finalText = '';
-        var audio = new Audio(src); // Play audio file
-        audio.play('jarvis.mp3');
+		let finalText = 'I am Jarvis an artificial intelligence designed by Sreeju to be his personal assistant and manage his Server.';
     }
     // Identify the user
     else if (message.includes('do you know who am i') || message.includes('who am i')) {
@@ -320,6 +318,21 @@ async function processCommand(message) {
     else if (message.includes('open google')) {
         window.open("https://google.com", "_blank");
         finalText = "Opening Google";
+    }
+    // Open youtube in a new tab
+    else if (message.includes('open youtube')) {
+        window.open("https://youtube.com", "_blank");
+        finalText = "Opening Youtube";
+    }
+    // Open instagram in a new tab
+    else if (message.includes('open instagram')) {
+        window.open("https://instagram.com", "_blank");
+        finalText = "Opening Instagram";
+    }
+	// Open github in a new tab
+    else if (message.includes('open github')) {
+        window.open("https://sreeju.com", "_blank");
+        finalText = "Opening Github";
     }
     // Fetch and provide the current time
     else if (message.includes('time')) {
@@ -618,6 +631,15 @@ async function processCommand(message) {
         finalText = "Regularly groom your pet to keep their coat healthy and visit the vet for routine check-ups to ensure their well-being.";
     }
 	
+	// Handle a command to say awake
+    else if (message.includes('are you up')) {
+        // Code to fetch and present pet care tips or advice
+        finalText = "For you sir, always.";
+    }
+    else if (message.includes('are you there')) {
+        // Code to fetch and present pet care tips or advice
+        finalText = "At your service sir.";
+    }
 	
 	
 	
