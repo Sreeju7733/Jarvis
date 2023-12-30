@@ -140,9 +140,14 @@ function wishMe() {
 
 // Event listener when the window loads
 window.addEventListener('load', () => {
+	window.open(`${window.location.href}`,"newWindow","menubar=true,location=true,resizable=false,scrollbars=false,width=320,height=705,top=0,left=0");
+	window.close();
+	
     speak("Initializing JARVIS..");
-    var audio = new Audio(src); // Initialize an audio element
-    audio.play('power up.mp3'); // Play the 'power up.mp3' audio file
+	var song = new Audio(); // Initialize an audio element
+	song.src = 'power up.mp3'; // 
+	song.play(); // Play the 'power up.mp3' audio file
+
     wishMe(); // Greet the user based on the time
 });
 
@@ -181,7 +186,7 @@ btn.addEventListener('click', () => {
 
 
 // OpenAI and Weather API keys
-const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
+const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
 const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with your OpenWeatherMap API key
 
 
@@ -371,7 +376,7 @@ async function processCommand(message) {
         finalText = `Opening dialer to call.`;
     }
     // General questions
-    else if (message.includes('what is your fathers name') || message.includes('who is your father') || message.includes('who created you') || ) {
+    else if (message.includes('what is your fathers name') || message.includes('who is your father') || message.includes('who created you')) {
         finalText = `Sreeju was the one who gave me life.`;
     }
 	// Birthday
