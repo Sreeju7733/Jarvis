@@ -303,13 +303,14 @@ async function processCommand(message) {
         finalText = "I'm doing great boss Tell me how I can assist you.";
     }
     // Handle inappropriate language
-    else if (message.includes('f** you')) {
+    else if (message.includes('f*** you')) {
         finalText = "Fuck you";
     }
     // Respond to inquiries about its identity
     else if (message.includes('who are you')) {
 		let finalText = 'I am Jarvis an artificial intelligence designed by Sreeju to be his personal assistant and manage his Server.';
     }
+	
     // Identify the user
     else if (message.includes('do you know who am i') || message.includes('who am i')) {
         finalText = "In reality you are my boss, Sreeju.";
