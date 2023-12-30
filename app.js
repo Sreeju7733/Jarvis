@@ -208,7 +208,7 @@ btn.addEventListener('click', () => {
 
 
 // OpenAI and Weather API keys
-const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
+const OPENAI_API_KEY = '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'; // Replace with your actual OpenAI API key
 const OPENWEATHER_API_KEY = '48ddfe8c9cf29f95b7d0e54d6e171008'; // Replace with your OpenWeatherMap API key
 
 
@@ -290,7 +290,7 @@ async function processCommand(message) {
 
     // Handle basic greetings
     else if (message.includes('hey') || message.includes('hello') || message.includes('hi')) {
-        finalText = "Hi, Boss. How are you doing?";
+        finalText = "Hi Boss How are you doing?";
     }
 	
 	// Handle basic greetings
@@ -300,7 +300,7 @@ async function processCommand(message) {
 	
     // Respond to a query about well-being
     else if (message.includes('how are you')) {
-        finalText = "I'm doing great, boss. Tell me how I can assist you.";
+        finalText = "I'm doing great boss Tell me how I can assist you.";
     }
     // Handle inappropriate language
     else if (message.includes('f** you')) {
@@ -314,7 +314,7 @@ async function processCommand(message) {
     }
     // Identify the user
     else if (message.includes('do you know who am i') || message.includes('who am i')) {
-        finalText = "In reality, you are my boss, Sreeju.";
+        finalText = "In reality you are my boss, Sreeju.";
     }
     // Open Google in a new tab
     else if (message.includes('open google')) {
@@ -344,7 +344,7 @@ async function processCommand(message) {
             const result = eval(expression); // Caution: using eval - consider safer alternatives for production
             finalText = `The result is ${result}`;
         } catch (error) {
-            finalText = "Sorry, I couldn't calculate that.";
+            finalText = "Sorry I couldn't calculate that.";
         }
     }
     // Open a website in a new tab
@@ -403,15 +403,231 @@ async function processCommand(message) {
     }
 	// Birthday
     else if (message.includes('when is your birthday')) {
-        finalText = `On December 29, 2023, around midnight, I existed as an idea in Sreeju's mind.`;
+        finalText = `On December 29 2023 around midnight I existed as an idea in Sreeju's mind.`;
     }
+    // Handle a command for Wikipedia search
+    else if (message.includes('search on Wikipedia for')) {
+        const searchTerm = message.replace('search on Wikipedia for', '').trim();
+        // Code to search and retrieve information from Wikipedia
+        const wikiInfo = await searchWikipedia(searchTerm);
+        finalText = wikiInfo.summary || "Sorry, I couldn't find information on that.";
+    }
+
+    // Handle a command to tell a fact
+    else if (message.includes('tell me a fact')) {
+        // Code to fetch and present a random interesting fact
+        finalText = "Did you know that a group of flamingos is called a flamboyance?";
+    }
+    // Handle a command to tell a joke
+    else if (message.includes('tell me a joke')) {
+        finalText = "Why don't scientists trust atoms? Because they make up everything!";
+    }
+    // Handle a command to read a specific webpage content
+    else if (message.includes('read page')) {
+        const pageURL = message.replace('read page', '').trim();
+        // Code to fetch the content of the webpage from the URL
+        const pageContent = await fetchPageContent(pageURL);
+        finalText = pageContent || "Sorry, I couldn't fetch the content of the page.";
+    }
+
+    // Handle a command to set a timer
+    else if (message.includes('set a timer')) {
+        const timeInSeconds = parseInt(message.match(/\d+/)); // Extract time in seconds from the command
+        setTimeout(() => {
+            finalText = "Your timer is up!";
+            speech.text = finalText;
+            jarvis_t.textContent = speech.text;
+            window.speechSynthesis.speak(speech);
+        }, timeInSeconds * 1000); // Convert seconds to milliseconds
+        finalText = `Timer set for ${timeInSeconds} seconds.`;
+    }
+
+    // Handle a command to provide motivational quotes
+    else if (message.includes('motivate me')) {
+        // Code to fetch and present a motivational quote
+        finalText = "Success is not final, failure is not fatal: It is the courage to continue that counts.";
+    }
+
+    // Handle a command to flip a coin
+    else if (message.includes('flip a coin')) {
+        const result = Math.random() < 0.5 ? 'Heads' : 'Tails';
+        finalText = `The result is ${result}.`;
+    }
+
+    // Handle a command to roll a dice
+    else if (message.includes('roll a dice')) {
+        const result = Math.floor(Math.random() * 6) + 1;
+        finalText = `You rolled a ${result}.`;
+    }
+
+    // Handle a command to tell a riddle
+    else if (message.includes('tell me a riddle')) {
+        finalText = "What has keys but can't open locks? A piano!";
+    }
+	
+    // Handle a command to provide a fun fact
+    else if (message.includes('fun fact')) {
+        // Code to fetch and present a random interesting fact
+        finalText = "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!";
+    }
+
+    // Handle a command to share a programming tip
+    else if (message.includes('programming tip')) {
+        // Code to fetch and present a programming tip or advice
+        finalText = "Remember, naming conventions and code readability are crucial for maintainable and understandable code. Choose descriptive names for variables and functions!";
+    }
+
+    // Handle a command to generate a random joke
+    else if (message.includes('random joke')) {
+        // Code to fetch and present a random joke from an API or predefined jokes list
+        finalText = "Why don't we ever tell secrets on a farm? Because the potatoes have eyes and the corn has ears!";
+    }
+
+    // Handle a command to suggest a book
+    else if (message.includes('recommend a book')) {
+        // Code to suggest a book based on predefined recommendations or an API
+        finalText = "I recommend 'The Hitchhiker's Guide to the Galaxy' by Douglas Adams. It's a fantastic and humorous science fiction book!";
+    }
+
+    // Handle a command to provide a daily quote
+    else if (message.includes('daily quote')) {
+        // Code to fetch and present a quote of the day
+        finalText = "Every moment is a fresh beginning. - T.S. Eliot";
+    }
+
+    // Handle a command to simulate a magic 8-ball response
+    else if (message.includes('magic 8-ball')) {
+        const responses = [
+            "It is certain.",
+            "Without a doubt.",
+            "Outlook not so good.",
+            "Reply hazy, try again.",
+            "Cannot predict now."
+        ];
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        finalText = `Magic 8-ball says: ${randomResponse}`;
+    }
+    // Handle a command to generate a random quote
+    else if (message.includes('random quote')) {
+        // Code to fetch and present a random quote from an API or predefined list
+        finalText = "The best way to predict the future is to create it. - Peter Drucker";
+    }
+
+    // Handle a command to provide health tips
+    else if (message.includes('health tips')) {
+        // Code to fetch and present a health tip or advice
+        finalText = "Remember to drink plenty of water and get at least 30 minutes of physical activity every day to maintain good health.";
+    }
+
+    // Handle a command to suggest a movie
+    else if (message.includes('recommend a movie')) {
+        // Code to suggest a movie based on predefined recommendations or an API
+        finalText = "I recommend watching 'The Shawshank Redemption'. It's a powerful and inspiring movie!";
+    }
+
+    // Handle a command to perform a language translation
+    else if (message.includes('translate to')) {
+        const textToTranslate = message.replace('translate to', '').trim();
+        // Code to perform translation to the specified language using an API
+        // Assuming the translated text is retrieved as translatedText
+        const translatedText = await translateToLanguage(textToTranslate, 'Spanish');
+        finalText = `The translation to Spanish is: ${translatedText}`;
+    }
+
+    // Handle a command to provide a cooking tip
+    else if (message.includes('cooking tip')) {
+        // Code to fetch and present a cooking tip or advice
+        finalText = "When baking, always preheat your oven before placing your dish inside for the best results.";
+    }
+
+    // Handle a command to offer a brain teaser
+    else if (message.includes('brain teaser')) {
+        // Code to present a brain teaser or riddle
+        finalText = "I am taken from a mine and shut up in a wooden case, from which I am never released, and yet I am used by almost every person. What am I? Answer: Pencil lead.";
+    }
+    // Handle a command to provide productivity tips
+    else if (message.includes('productivity tips')) {
+        // Code to fetch and present a productivity tip or advice
+        finalText = "One effective productivity tip is to break tasks into smaller, manageable chunks and prioritize them.";
+    }
+
+    // Handle a command to suggest a podcast
+    else if (message.includes('recommend a podcast')) {
+        // Code to suggest a podcast based on predefined recommendations or an API
+        finalText = "I recommend listening to 'The Joe Rogan Experience'. It covers a wide range of topics and has interesting discussions!";
+    }
+
+    // Handle a command to play a specific genre of music
+    else if (message.includes('play genre')) {
+        const genre = message.replace('play genre', '').trim();
+        // Code to play music of the specified genre using an audio player
+        finalText = `Playing ${genre} music for you.`;
+    }
+
+    // Handle a command to offer a daily affirmation
+    else if (message.includes('daily affirmation')) {
+        // Code to fetch and present a positive affirmation or motivational message
+        finalText = "You are capable of achieving amazing things. Keep moving forward!";
+    }
+
+    // Handle a command to provide study tips
+    else if (message.includes('study tips')) {
+        // Code to fetch and present a study tip or advice
+        finalText = "To improve study sessions, try using the Pomodoro Technique: study for 25 minutes, then take a 5-minute break.";
+    }
+
+    // Handle a command to recommend a TV show
+    else if (message.includes('recommend a TV show')) {
+        // Code to suggest a TV show based on predefined recommendations or an API
+        finalText = "I recommend watching 'Stranger Things'. It's a thrilling and captivating TV series!";
+    }
+	
+    // Handle a command to offer gardening tips
+    else if (message.includes('gardening tips')) {
+        // Code to fetch and present a gardening tip or advice
+        finalText = "Water your plants in the morning to avoid evaporation loss, and consider composting for healthier soil.";
+    }
+
+    // Handle a command to recommend a documentary
+    else if (message.includes('recommend a documentary')) {
+        // Code to suggest a documentary based on predefined recommendations or an API
+        finalText = "I recommend watching 'Planet Earth II'. It's a stunning documentary series showcasing the beauty of our planet.";
+    }
+
+    // Handle a command to suggest a travel destination
+    else if (message.includes('recommend a travel destination')) {
+        // Code to suggest a travel destination based on predefined recommendations or an API
+        finalText = "Consider visiting Kyoto, Japan. It's a city rich in history, culture, and beautiful landscapes.";
+    }
+
+    // Handle a command to offer meditation tips
+    else if (message.includes('meditation tips')) {
+        // Code to fetch and present meditation tips or advice
+        finalText = "Find a quiet space, focus on your breath, and let go of distracting thoughts for a more effective meditation session.";
+    }
+
+    // Handle a command to recommend a board game
+    else if (message.includes('recommend a board game')) {
+        // Code to suggest a board game based on predefined recommendations or an API
+        finalText = "I recommend playing 'Ticket to Ride'. It's a fun and strategic board game involving train adventures!";
+    }
+
+    // Handle a command to provide pet care tips
+    else if (message.includes('pet care tips')) {
+        // Code to fetch and present pet care tips or advice
+        finalText = "Regularly groom your pet to keep their coat healthy and visit the vet for routine check-ups to ensure their well-being.";
+    }
+	
+	
+	
+	
+	
 	
 	
     // Default response if no recognized command is found
     else {
         speech.text = finalText || "Could you just repeat it again?";
     }
-	
 	speech.text = finalText;
 	jarvis_t.textContent = speech.text; // Display text spoken by Jarvis in the designated element
 	
@@ -421,5 +637,6 @@ async function processCommand(message) {
     speech.rate = 1;
 
     // Speak the final text response
+    window.speechSynthesis.cancel(); // Cancel any ongoing speech synthesis
     window.speechSynthesis.speak(speech);
 }
