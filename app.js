@@ -308,7 +308,7 @@ async function processCommand(message) {
     }
     // Respond to inquiries about its identity
     else if (message.includes('who are you')) {
-		let finalText = 'I am Jarvis an artificial intelligence designed by Sreeju to be his personal assistant and manage his Server.';
+		finalText = 'I am Jarvis an artificial intelligence designed by Sreeju to be his personal assistant and manage his Server.';
     }
 	
     // Identify the user
