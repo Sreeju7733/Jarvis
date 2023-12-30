@@ -394,7 +394,7 @@ async function processCommand(message) {
     else if (message.includes('call')) {
         // Code to open a dialer to call
         const call = message.split('call')[1].trim();
-        window.open(`tell:${call}`);
+        window.open(`tel:${call}`);
         finalText = `Opening dialer to call.`;
     }
     // General questions
@@ -496,7 +496,7 @@ async function processCommand(message) {
     }
 
     // Handle a command to simulate a magic 8-ball response
-    else if (message.includes('magic 8-ball')) {
+    else if (message.includes('magic 8 ball')) {
         const responses = [
             "It is certain.",
             "Without a doubt.",
