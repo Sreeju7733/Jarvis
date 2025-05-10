@@ -304,7 +304,7 @@ async function processCommand(message) {
     }
     // Handle inappropriate language
     else if (message.includes('f*** you')) {
-        finalText = "Fuck you";
+        finalText = "Fuck you too mother fucker";
     }
     // Respond to inquiries about its identity
     else if (message.includes('who are you')) {
